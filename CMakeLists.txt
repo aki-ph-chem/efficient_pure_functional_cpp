@@ -8,3 +8,4 @@ project(efficient_pure_functional_cpp)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(use_copy src_cpp/use_copy.cpp)
+add_executable(use_move src_cpp/use_move.cpp)
