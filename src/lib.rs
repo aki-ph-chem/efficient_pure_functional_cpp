@@ -25,12 +25,7 @@ pub mod use_copy_or_move {
     use super::*;
 
     pub fn squared(v: Vec<f64>) -> Vec<f64> {
-        let mut v = v;
-        for x in v.iter_mut() {
-            *x *= *x;
-        }
-
-        v
+        v.iter().map(|x| x.powi(2)).collect()
     }
 
     pub fn rms(v: Vec<f64>) -> f64 {
@@ -59,12 +54,8 @@ pub mod pipe_like_chain {
             Fp64(self.0.iter().sum::<f64>() / self.0.len() as f64)
         }
 
-        pub fn squared(mut self) -> Self {
-            for x in self.0.iter_mut() {
-                *x *= *x;
-            }
-
-            self
+        pub fn squared(self) -> Self {
+            Self(self.0.iter().map(|x| x.powi(2)).collect())
         }
 
         pub fn rms(self) -> Fp64 {
