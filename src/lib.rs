@@ -37,3 +37,38 @@ pub mod use_copy_or_move {
         mean(&squared(v)).sqrt()
     }
 }
+
+pub mod pipe_like_chain {
+    pub struct Fp64(pub f64);
+    impl Fp64 {
+        pub fn sqrt(self) -> Self {
+            Self(self.0.sqrt())
+        }
+    }
+
+    impl std::fmt::Display for Fp64 {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{}", self.0)
+        }
+    }
+
+    #[derive(Debug, Clone)]
+    pub struct VecFp64(pub Vec<f64>);
+    impl VecFp64 {
+        pub fn mean(self) -> Fp64 {
+            Fp64(self.0.iter().sum::<f64>() / self.0.len() as f64)
+        }
+
+        pub fn squared(mut self) -> Self {
+            for x in self.0.iter_mut() {
+                *x *= *x;
+            }
+
+            self
+        }
+
+        pub fn rms(self) -> Fp64 {
+            self.squared().mean().sqrt()
+        }
+    }
+}
